@@ -1,3 +1,5 @@
+package minkowitz.physics;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;

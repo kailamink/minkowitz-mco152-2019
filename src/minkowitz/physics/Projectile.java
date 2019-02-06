@@ -1,3 +1,4 @@
+package minkowitz.physics;
 public class Projectile
 {
     private double theta;
