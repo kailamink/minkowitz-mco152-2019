@@ -2,8 +2,6 @@ package minkowitz.physics;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.stream.Stream;
-
 //list of projectiles every second we're going to add 5 projectiles
 //projectiles will have  a velocity in the range of 50 to 120 aka 70
 //degrees from 30 to 150 aka 120
@@ -17,16 +15,23 @@ public class Main {
     {
         ArrayList<Projectile> rockets = new ArrayList<>();
         Random rand = new Random();
-        for(int aa = 0; aa < 120; ++aa)
+        final int upperBoundOfRockets = 6;
+        final int lowerBoundTheta = 30;
+        final int upperBoundTheta = 121;
+        final int lowerBoundVelocity = 50;
+        final int upperBoundVelocity = 71;
+
+        for(int time = 0; time < 120; ++time)
         {
-            int numberOfRocketsToAdd = rand.nextInt(6);
-            for(int ix = 0; ix <= numberOfRocketsToAdd; ++ix)
-            {
-                rockets.add(new Projectile(rand.nextInt(121) + 30, rand.nextInt(71) + 50));
-            }
+            int numberOfRocketsToAdd = rand.nextInt(upperBoundOfRockets);
             for (Projectile p : rockets)
             {
                 p.addTime(1);
+            }
+            for(int ix = 0; ix <= numberOfRocketsToAdd; ++ix)
+            {
+                rockets.add(new Projectile(rand.nextInt(upperBoundTheta) + lowerBoundTheta,
+                                            rand.nextInt(upperBoundVelocity) + lowerBoundVelocity));
             }
         }
         rockets.stream()
