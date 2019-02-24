@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Dictionary {
     private HashMap<String, String> dictionary = new HashMap<>();
@@ -83,5 +84,23 @@ public class Dictionary {
             reverse = reverse + word.charAt(i);
         }
         return reverse;
+    }
+
+    public boolean removeWordFromDictionary(String word)
+    {
+        if(dictionary.containsKey(word.toUpperCase()))
+        {
+            dictionary.remove(word);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Set<String> getKeySet()
+    {
+        return dictionary.keySet();
     }
 }
