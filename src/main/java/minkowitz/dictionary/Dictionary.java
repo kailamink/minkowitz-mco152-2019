@@ -30,14 +30,7 @@ public class Dictionary {
 
     public String lookupWord(String word)
     {
-        if(contains(word))
-        {
-            return dictionary.get(word.toUpperCase());
-        }
-        else
-        {
-            return "That word was not found";
-        }
+        return dictionary.get(word.toUpperCase());
     }
 
     public int getSize()
@@ -52,14 +45,7 @@ public class Dictionary {
 
     public boolean isPalindrome(String word)
     {
-        if(word.equalsIgnoreCase(reverseString(word)))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return word.equalsIgnoreCase(reverseString(word));
     }
 
     public ArrayList<String> getPalindromes()
@@ -77,12 +63,12 @@ public class Dictionary {
 
     private String reverseString(String word)
     {
-        String reverse = "";
+        StringBuilder reverse = new StringBuilder();
         for (int i = word.length() - 1; i >= 0; --i)
         {
-            reverse = reverse + word.charAt(i);
+            reverse.append(word.charAt(i));
         }
-        return reverse;
+        return reverse.toString();
     }
 
     public boolean removeWordFromDictionary(String word)
