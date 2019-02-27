@@ -11,7 +11,7 @@ public class ProjectileTest {
     public void getLocationAfter3Seconds()
     {
         //given
-        Projectile p = new Projectile(48,67);
+        minkowitz.physics.Projectile p = new Projectile(48,67);
 
         //when
         p.addTime(3);
