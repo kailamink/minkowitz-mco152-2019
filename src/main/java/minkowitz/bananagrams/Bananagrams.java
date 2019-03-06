@@ -20,7 +20,17 @@ public class Bananagrams {
     public ArrayList<String> getAllViableWords() throws FileNotFoundException {
         ArrayList<String> viableWords = new ArrayList<>();
         dictionary = new Dictionary();
-        
+        for(String word : dictionary.getKeySet())
+        {
+            if(word.length() <= NR_OF_LETTERS)
+            {
+                for(int ix = 0; ix < NR_OF_LETTERS; ++ix)
+                {
+
+                }
+            }
+        }
+        return viableWords;
     }
     private void initializeMyLetters()
     {
