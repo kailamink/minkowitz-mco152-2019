@@ -17,33 +17,45 @@ public class Bananagrams {
         initializeMyLetters();
     }
 
-    public ArrayList<String> getAllViableWords() throws FileNotFoundException {
+    public Bananagrams(String letters)
+    {
+        initializeMyLetters(letters);
+    }
+
+    public ArrayList<String> getAllViableWords() throws FileNotFoundException
+    {
         ArrayList<String> viableWords = new ArrayList<>();
         dictionary = new Dictionary();
         for(String word : dictionary.getKeySet())
         {
             if(word.length() <= NR_OF_LETTERS)
             {
-                ArrayList<String> poppedLetters = new ArrayList<>();
-                boolean isViableWord = true;
-                for(int ix = 0; ix < word.length(); ++ix)
-                {
-                    if(myLetters.contains(Character.toString(word.charAt(ix))))
-                    {
-                        myLetters.remove(Character.toString(word.charAt(ix)));
-                        poppedLetters.add(Character.toString(word.charAt(ix)));
-                    }
-                    else
-                    {
-                        isViableWord = false;
-                        break;
-                    }
-                }
-                for(String str : poppedLetters) { myLetters.add(str); }
-                if(isViableWord) { viableWords.add(word);}
+                if(isViableWord(word)) { viableWords.add(word);}
             }
         }
         return viableWords;
+    }
+
+    public boolean isViableWord(String word)
+    {
+        String upperCased = word.toUpperCase();
+        boolean isViableWord = true;
+        ArrayList<String> poppedLetters = new ArrayList<>();
+        for(int ix = 0; ix < upperCased.length(); ++ix)
+        {
+            if(myLetters.contains(Character.toString(upperCased.charAt(ix))))
+            {
+                myLetters.remove(Character.toString(upperCased.charAt(ix)));
+                poppedLetters.add(Character.toString(upperCased.charAt(ix)));
+            }
+            else
+            {
+                isViableWord = false;
+                break;
+            }
+        }
+        for(String str : poppedLetters) { myLetters.add(str); }
+        return isViableWord;
     }
 
     public ArrayList<String> getLetters()
@@ -55,9 +67,21 @@ public class Bananagrams {
     {
         String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random rand = new Random();
+        myLetters.clear();
         for(int ix = 0; ix < NR_OF_LETTERS; ++ix)
         {
             char chr = letters.charAt(rand.nextInt(letters.length()));
+            myLetters.add(Character.toString(chr));
+        }
+    }
+
+    public void initializeMyLetters(String letters)
+    {
+        myLetters.clear();
+        letters.toUpperCase();
+        for (int ix = 0; ix < letters.length(); ++ix)
+        {
+            char chr = letters.charAt(ix);
             myLetters.add(Character.toString(chr));
         }
     }
