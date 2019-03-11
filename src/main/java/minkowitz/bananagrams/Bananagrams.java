@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Bananagrams {
 
-    public ArrayList<String> myLetters = new ArrayList<>();
-    public final int NR_OF_LETTERS = 14;
+    private ArrayList<String> myLetters = new ArrayList<>();
+    private final int NR_OF_LETTERS = 14;
     public Dictionary dictionary;
 
     public Bananagrams()
