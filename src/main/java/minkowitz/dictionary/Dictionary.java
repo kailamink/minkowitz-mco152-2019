@@ -64,9 +64,9 @@ public class Dictionary {
     private String reverseString(String word)
     {
         StringBuilder reverse = new StringBuilder();
-        for (int i = word.length() - 1; i >= 0; --i)
+        for (int ix = word.length() - 1; ix >= 0; --ix)
         {
-            reverse.append(word.charAt(i));
+            reverse.append(word.charAt(ix));
         }
         return reverse.toString();
     }
