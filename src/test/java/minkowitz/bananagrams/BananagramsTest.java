@@ -1,9 +1,11 @@
 package minkowitz.bananagrams;
 
+import minkowitz.dictionary.Dictionary;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -13,10 +15,10 @@ import static org.mockito.Mockito.mock;
 public class BananagramsTest {
 
     @Test
-    public void isViableWordTrue()
-    {
+    public void isViableWordTrue() throws FileNotFoundException {
         //given
-        Bananagrams bananagrams = new Bananagrams("KAILA");
+        Dictionary dictionary = new Dictionary();
+        Bananagrams bananagrams = new Bananagrams(dictionary,"KAILA");
         //when
         boolean isViable = bananagrams.isViableWordGivenMyLetters("AA");
         //then
@@ -24,10 +26,10 @@ public class BananagramsTest {
     }
 
     @Test
-    public void isViableWordFalse()
-    {
+    public void isViableWordFalse() throws FileNotFoundException {
         //given
-        Bananagrams bananagrams = new Bananagrams("KAILA");
+        Dictionary dictionary = new Dictionary();
+        Bananagrams bananagrams = new Bananagrams(dictionary,"KAILA");
         //when
         boolean isViable = bananagrams.isViableWordGivenMyLetters("AB");
         //then
@@ -35,10 +37,10 @@ public class BananagramsTest {
     }
 
     @Test
-    public void isViableWordMixedCaseTrue()
-    {
+    public void isViableWordMixedCaseTrue() throws FileNotFoundException {
         //given
-        Bananagrams bananagrams = new Bananagrams("KAILA");
+        Dictionary dictionary = new Dictionary();
+        Bananagrams bananagrams = new Bananagrams(dictionary,"KAILA");
         //when
         boolean isViable = bananagrams.isViableWordGivenMyLetters("Aa");
         //then
@@ -50,10 +52,12 @@ public class BananagramsTest {
     //so this is incomplete
 
     @Test
-    public void verifyGetAllViableWordsAreAllViableWords() throws FileNotFoundException
+    public void verifyGetAllViableWordsAreAllViableWords()
     {
         //given
-        Bananagrams bananagrams = new Bananagrams("KAILA");
+        Dictionary dictionary =  mock(Dictionary.class);
+        Bananagrams bananagrams = new Bananagrams(dictionary,"KAILA");
+        doReturn(Arrays.asList("AA", "ILK", "AIL", "LAKE", "AI")).when(dictionary).getKeySet();
         //when
         ArrayList<String> wordList = bananagrams.getAllViableWordsGivenMyLetters();
         //then
@@ -63,21 +67,21 @@ public class BananagramsTest {
         }
     }
 
-    //how do i test if i missed words? should i use my dictionary and get the list
-    //and remove like i did for palindrome? That sounds illegal
     @Test
-    public void verifyAfterRemovingViableWordsFromDictionaryThereAreNoneLeft() throws FileNotFoundException
+    public void verifyAfterRemovingViableWordsFromDictionaryThereAreNoneLeft()
     {
         //given
-        Bananagrams bananagrams = new Bananagrams("KAILA");
+        Dictionary dictionary =  mock(Dictionary.class);
+        Bananagrams bananagrams = new Bananagrams(dictionary,"DICTIONARY");
+        doReturn(Arrays.asList("AA", "ION", "RAY", "CARTON", "JOY", "DICE")).when(dictionary).getKeySet();
         //when
         ArrayList<String> wordList = bananagrams.getAllViableWordsGivenMyLetters();
         for(String word : wordList)
         {
-            bananagrams.dictionary.removeWordFromDictionary(word);
+            dictionary.removeWordFromDictionary(word);
         }
         //then
-        for(String word : bananagrams.dictionary.getKeySet())
+        for(String word : dictionary.getKeySet())
         {
             assertFalse(bananagrams.isViableWordGivenMyLetters(word));
         }

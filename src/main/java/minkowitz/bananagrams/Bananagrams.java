@@ -10,22 +10,23 @@ public class Bananagrams {
 
     private ArrayList<String> myLetters = new ArrayList<>();
     private final int NR_OF_LETTERS = 14;
-    public Dictionary dictionary;
+    private Dictionary dictionary;
 
-    public Bananagrams()
+    public Bananagrams(Dictionary dictionary)
     {
+        this.dictionary = dictionary;
         initializeMyLetters();
     }
 
-    public Bananagrams(String letters)
+    public Bananagrams(Dictionary dictionary, String letters)
     {
+        this.dictionary = dictionary;
         initializeMyLetters(letters);
     }
 
-    public ArrayList<String> getAllViableWordsGivenMyLetters() throws FileNotFoundException
+    public ArrayList<String> getAllViableWordsGivenMyLetters()
     {
         ArrayList<String> viableWords = new ArrayList<>();
-        dictionary = new Dictionary();
         for(String word : dictionary.getKeySet())
         {
             if(word.length() <= NR_OF_LETTERS)
@@ -78,10 +79,10 @@ public class Bananagrams {
     public void initializeMyLetters(String letters)
     {
         myLetters.clear();
-        letters.toUpperCase();
-        for (int ix = 0; ix < letters.length(); ++ix)
+        String upperCased = letters.toUpperCase();
+        for (int ix = 0; ix < upperCased.length(); ++ix)
         {
-            char chr = letters.charAt(ix);
+            char chr = upperCased.charAt(ix);
             myLetters.add(Character.toString(chr));
         }
     }
