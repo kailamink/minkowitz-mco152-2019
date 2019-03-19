@@ -6,9 +6,12 @@ import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -57,7 +60,7 @@ public class BananagramsTest {
         //given
         Dictionary dictionary =  mock(Dictionary.class);
         Bananagrams bananagrams = new Bananagrams(dictionary,"KAILA");
-        doReturn(Arrays.asList("AA", "ILK", "AIL", "LAKE", "AI")).when(dictionary).getKeySet();
+        doReturn(new HashSet<String>(Arrays.asList("AA", "ION", "RAY", "CARTON", "JOY", "DICE"))).when(dictionary).getKeySet();
         //when
         ArrayList<String> wordList = bananagrams.getAllViableWordsGivenMyLetters();
         //then
@@ -72,14 +75,18 @@ public class BananagramsTest {
     {
         //given
         Dictionary dictionary =  mock(Dictionary.class);
-        Bananagrams bananagrams = new Bananagrams(dictionary,"DICTIONARY");
-        doReturn(Arrays.asList("AA", "ION", "RAY", "CARTON", "JOY", "DICE")).when(dictionary).getKeySet();
+        Bananagrams bananagrams =
+                new Bananagrams(dictionary,"DICTIONARY");
+        HashSet<String> fakeDictionary =
+                new HashSet<>(Arrays.asList("AA", "ION", "RAY", "CARTON", "JOY", "DICE"));
+        doReturn(fakeDictionary).when(dictionary).getKeySet();
         //when
         ArrayList<String> wordList = bananagrams.getAllViableWordsGivenMyLetters();
         for(String word : wordList)
         {
-            dictionary.removeWordFromDictionary(word);
+            fakeDictionary.remove(word);
         }
+        doReturn(fakeDictionary).when(dictionary).getKeySet();
         //then
         for(String word : dictionary.getKeySet())
         {
