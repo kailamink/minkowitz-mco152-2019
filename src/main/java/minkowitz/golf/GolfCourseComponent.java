@@ -1,5 +1,7 @@
 package minkowitz.golf;
 
+import minkowitz.physics.Projectile;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +15,8 @@ public class GolfCourseComponent extends JComponent
     private static final int POLE_HEIGHT = 100;
     private static final int FLAG_WIDTH = 26;
 
+    private Projectile golfball = null;
+
     @Override
     protected void paintComponent(Graphics graphics)
     {
@@ -22,6 +26,11 @@ public class GolfCourseComponent extends JComponent
         createEarth(graphics,groundHeight);
         createGolfBall(graphics,groundHeight);
         createFlagPole(graphics,groundHeight);
+        if(golfball != null)
+        {
+            golfball.addTime(.01);
+        }
+        repaint();
     }
 
     private void createFlagPole(Graphics graphics, int groundHeight)
@@ -63,9 +72,22 @@ public class GolfCourseComponent extends JComponent
     private void createGolfBall(Graphics graphics, int groundHeight)
     {
         graphics.setColor(Color.WHITE);
-        graphics.fillOval((int) (BALL_START_X),
-                groundHeight-BALL_WIDTH,
+
+        double golfX = 0;
+        double golfY = 0;
+        if(golfball != null)
+        {
+            golfX = golfball.getX();
+            golfY = golfball.getY();
+        }
+        graphics.fillOval((int) (BALL_START_X + golfX),
+                (int)(groundHeight-BALL_WIDTH - golfY),
                 BALL_WIDTH,
                 BALL_WIDTH);
+    }
+
+    public void create(double theta, double velocity)
+    {
+        golfball = new Projectile(theta, velocity);
     }
 }
