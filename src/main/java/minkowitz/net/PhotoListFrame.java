@@ -17,6 +17,7 @@ public class PhotoListFrame extends JFrame {
     private final JLabel currentNumberLabel = new JLabel("");
     private final Disposable disposable;
     private final JList photoSideBar;
+    private final JScrollPane scrollPane;
 
     private PhotoList photoList;
     private int counter = 0;
@@ -36,8 +37,8 @@ public class PhotoListFrame extends JFrame {
         root.add(bottomPanel, BorderLayout.SOUTH);
 
         photoSideBar = new JList();
-        root.add(photoSideBar, BorderLayout.EAST);
-
+        scrollPane = new JScrollPane(photoSideBar);
+        root.add(scrollPane, BorderLayout.EAST);
         setContentPane(root);
 
         JsonPlaceholderClient client = new JsonPlaceholderClient();
@@ -46,7 +47,6 @@ public class PhotoListFrame extends JFrame {
                     photoList = photos;
                     setPhoto(photos.get(counter));
                     setSideBar(photos);
-                    setListListener();
                 });
 
         onWindowClose();
@@ -68,9 +68,10 @@ public class PhotoListFrame extends JFrame {
             listModel.addElement(photo.getTitle());
         }
         photoSideBar.setModel(listModel);
+        setSideBarListener();
     }
 
-    public void setListListener()
+    public void setSideBarListener()
     {
         photoSideBar.addListSelectionListener(listSelectionListener -> {
             int photoIndex = photoSideBar.getSelectedIndex();
@@ -78,12 +79,10 @@ public class PhotoListFrame extends JFrame {
             setPhoto(photoList.get(photoIndex));
         });
     }
-    public void updatePhotoNumber() {
-        currentNumberLabel.setText(String.valueOf(counter + 1));
-    }
 
     public void updatePhotoNumber(int index) {
         currentNumberLabel.setText(String.valueOf(index + 1));
+        counter = index;
     }
 
     public void onWindowClose()
@@ -116,7 +115,7 @@ public class PhotoListFrame extends JFrame {
                 counter--;
             }
             setPhoto(photoList.get(counter));
-            updatePhotoNumber();
+            updatePhotoNumber(counter);
         });
     }
 
@@ -127,7 +126,7 @@ public class PhotoListFrame extends JFrame {
                 counter++;
             }
             setPhoto(photoList.get(counter));
-            updatePhotoNumber();
+            updatePhotoNumber(counter);
         });
     }
 
